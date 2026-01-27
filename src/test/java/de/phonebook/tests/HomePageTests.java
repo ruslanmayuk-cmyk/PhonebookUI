@@ -1,17 +1,22 @@
 package de.phonebook.tests;
 
+import de.phonebook.core.TestBase;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class HomePageTests extends TestBase {
+    @BeforeMethod
+    public void ensurePrecondition() {
+        if (!app.getHomePage().isHomeComponentPresent()) {
+            app.getHomePage().clickOnHomeLink();
+        }
+    }
 
     @Test
-    // проверяем наличие элемента HomeComponent  на главной стр.
     public void isHomeComponentPresentTest() {
-        // driver.findElement(By.xpath( "//div[2]//h1"));
-        //ниччего не проверяет, нужет булевый метод, к-рый возвращает  true/false
-        // System.out.println("Home Component is " + isHomeComponentPresent());
-        Assert.assertTrue(isHomeComponentPresent());
+
+        Assert.assertTrue(app.getHomePage().isHomeComponentPresent());
 
 
     }
