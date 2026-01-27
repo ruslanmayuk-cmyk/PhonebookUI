@@ -32,26 +32,25 @@ public class LoginTests extends TestBase {
 
 
     @Test
-    public void loginRegisteredUserPositiveTest(){
+    public void loginRegisteredUserPositiveTest() {
 
-            System.out.println("********Test");
+        System.out.println("********Test");
         app.getUser().clickOnLoginLink();
         app.getUser().fillLoginRegisterForm(new User()
-                              .setEmail("ruslammayuk2@gmail.com")
-                              .setPassword("rrrr12AA$"));
+                .setEmail("ruslammayuk2@gmail.com")
+                .setPassword("rrrr12AA$"));
         app.getUser().clickOnLoginButton();
         Assert.assertTrue(app.getUser().isSignOutButtonPresent());
     }
+
     @Test
-    public void loginRegisteredUserWithoutEmailNegativeTest(){
+    public void loginRegisteredUserWithoutEmailNegativeTest() {
 
         app.getUser().clickOnLoginLink();
         app.getUser().fillLoginRegisterForm(new User().setPassword("rrrr12AA$"));
         app.getUser().clickOnLoginButton();
         Assert.assertTrue(app.getUser().isAlertPresent());
     }
-
-
 
 
 }
