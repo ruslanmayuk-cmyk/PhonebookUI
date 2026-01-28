@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Parameters" verbose="1">
+    <test name="Login">
+        <classes>
+            <class name="de.phonebook.tests.LoginTests">
+                <parameter name="email" value="ruslammayuk2@gmail.com"></parameter>
+                <parameter name="password" value="rrrr12AA$"></parameter>
+                <methods>
+                    <include name=".*Parametrized.*" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
