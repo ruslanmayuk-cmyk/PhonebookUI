@@ -1,19 +1,22 @@
 package de.phonebook.core;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import com.google.common.io.Files;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 public class BaseHelper {
 
     protected WebDriver driver;
 
+
     public BaseHelper(WebDriver driver) {
         this.driver = driver;
+
     }
 
     public boolean isElementPresent(By locator) {
@@ -33,14 +36,17 @@ public class BaseHelper {
     }
 
     public boolean isAlertPresent() {
-        Alert alert = new WebDriverWait(driver, Duration.ofSeconds(20))
-                .until(ExpectedConditions.alertIsPresent());
+        Alert alert = getWait(20).until(ExpectedConditions.alertIsPresent());
         if (alert == null) {
             return false;
         } else {
-                driver.switchTo().alert().accept();
-                return true;
+            driver.switchTo().alert().accept();
+            return true;
         }
+    }
+
+    public WebDriverWait getWait(int seconds) {
+        return new WebDriverWait(driver, Duration.ofSeconds(seconds));
     }
 
     public void pause(int millis) {
@@ -49,5 +55,23 @@ public class BaseHelper {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String takeScreenshot() {
+//      if (isAlertPresent()) {
+//          WebDriverWait wait = getWait(5);
+//          Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+//          alert.accept();
+//      }
+
+        File tmp = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File screen = new File("screenshots/screen-" + System.currentTimeMillis() + ".png");
+        try {
+            Files.copy(tmp, screen);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return screen.getAbsolutePath();
+
     }
 }

@@ -1,5 +1,7 @@
 package de.phonebook.tests;
 
+import de.phonebook.data.ContactData;
+import de.phonebook.data.UserData;
 import de.phonebook.core.TestBase;
 import de.phonebook.model.Contact;
 import de.phonebook.model.User;
@@ -17,20 +19,20 @@ public class AddContactNegativeTests extends TestBase {
 
         app.getUser().clickOnLoginLink();
         app.getUser().fillLoginRegisterForm(new User()
-                .setEmail("ruslammayuk2@gmail.com")
-                .setPassword("rrrr12AA$"));
+                .setEmail(UserData.EMAIL)
+                .setPassword(UserData.PASSWORD));
         app.getUser().clickOnLoginButton();
 
     }
     @Test
     public void addContactWithInvalidPhoneTest() {
         app.getContact().clickOnAddLink();
-        app.getContact().fillContactForm(new Contact().setName("Ruslan")
-                .setLastname("Maiuk")
-                .setPhone("123456789")
-                .setEmail("rm@gmail.com")
-                .setAddress("Mulhaim")
-                .setDescription("QA"));
+        app.getContact().fillContactForm(new Contact().setName(ContactData.NAME)
+                .setLastname(ContactData.LASTNAME)
+                .setPhone(ContactData.INVALID_PHONE)
+                .setEmail(ContactData.EMAIL)
+                .setAddress(ContactData.ADRESS)
+                .setDescription(ContactData.DESCRIPTION));
         app.getContact().clickOnSaveButton();
         Assert.assertTrue(app.getContact().isAlertPresent());
 

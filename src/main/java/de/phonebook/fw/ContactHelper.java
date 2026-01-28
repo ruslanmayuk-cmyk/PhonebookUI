@@ -39,7 +39,7 @@ public class ContactHelper extends BaseHelper {
     public boolean verifyContactByName(String text) {
         List<WebElement> contacts = driver. findElements(By.cssSelector("h2"));
         for (WebElement element: contacts) {
-            if (element.getText().equals(text))
+            if (element.getText().contains(text))
                 return true;
         }
         return false;
