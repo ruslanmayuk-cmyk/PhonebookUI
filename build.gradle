@@ -36,7 +36,6 @@ task qa(type: Test) {
         systemProperty 'browser', "${browser}"
     }
 }
-
 // -----------------------------
 // Функция для регистрации отдельных задач
 // -----------------------------
@@ -52,11 +51,10 @@ def registerTask(String taskName, String suitePath) {
         }
     }
 }
-
 // -----------------------------
 // Примеры зарегистрированных задач
 // -----------------------------
-registerTask('testng', 'src/test/resources/testng.xml')
 registerTask('regression', 'src/test/resources/regression.xml')
+registerTask('testng', 'src/test/resources/testng.xml')
 registerTask('negative', 'src/test/resources/negative.xml')
 registerTask('param', 'src/test/resources/parameters.xml')

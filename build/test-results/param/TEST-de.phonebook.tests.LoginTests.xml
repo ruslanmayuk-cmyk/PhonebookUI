@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="de.phonebook.tests.LoginTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-04-22T16:05:29.530Z" hostname="DESKTOP-MJS02V5" time="1.831">
+  <properties/>
+  <testcase name="loginRegisteredUserParametrizedTest[0](ruslammayuk2@gmail.com, rrrr12AA$)" classname="de.phonebook.tests.LoginTests" time="1.744"/>
+  <system-out><![CDATA[18:05:29.570 [Test worker] INFO  de.phonebook.core.TestBase -- Start testloginRegisteredUserParametrizedTest
+********* Before method
+********Test
+18:05:31.366 [Test worker] INFO  de.phonebook.core.TestBase -- PASSED: loginRegisteredUserParametrizedTest
+18:05:31.366 [Test worker] INFO  de.phonebook.core.TestBase -- Stop test
+18:05:31.368 [Test worker] INFO  de.phonebook.core.TestBase -- *********************************
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

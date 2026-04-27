@@ -5,6 +5,7 @@ import de.phonebook.data.UserData;
 import de.phonebook.core.TestBase;
 import de.phonebook.model.Contact;
 import de.phonebook.model.User;
+import de.phonebook.utils.MyDataProviders;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class AddContactTests extends TestBase {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preconditions() {
         if (!app.getUser().isLoginLinkPresent()) {
             app.getUser().clickOnSignOutButton();
@@ -34,7 +35,7 @@ public class AddContactTests extends TestBase {
 
     }
 
-    @Test
+    @Test(groups = "demo")
     public void addContactPositiveTest() {
 
         app.getContact().clickOnAddLink();
@@ -55,43 +56,11 @@ public class AddContactTests extends TestBase {
 
     }
 
-    // DataProvider №1
-    @DataProvider
-    public Iterator<Object[]> addContact() {
 
-        // Список наборов тестовых данных
-        // Каждый Object[] — это один запуск теста
-        List<Object[]> list = new ArrayList<>();
-        list.add(new Object[]{
-                "Anatoliy",
-                "Trubin",
-                "1234567890",
-                "trubin@gmail.com",
-                "berlin",
-                "goalkeeper"});
-
-        list.add(new Object[]{"Andrey",
-                "Lunin",
-                "1234567891",
-                "lunin@gmail.com",
-                "berlin",
-                "goalkeeper"});
-
-        list.add(new Object[]{"Alex",
-                "Shovkovskiy",
-                "1234567892",
-                "alex@gmail.com",
-                "berlin",
-                "goalkeeper"});
-
-        // Возвращаем итератор, чтобы TestNG мог по очереди
-        // подставлять данные в тестовый метод
-        return list.iterator();
-    }
-
-    // Тест с DataProvider
-    @Test(dataProvider = "addContact")
-    public void addContactPositiveFronDataProviderTest(String name, String lastname, String phone, String email, String address, String desc) {
+    // Тест с DataProvider, сам DataProvider перенесен в MyDataProviders
+    @Test(dataProvider = "addContact", dataProviderClass = MyDataProviders.class)
+    public void addContactPositiveFronDataProviderTest(String name, String lastname, String phone,
+                                                       String email, String address, String desc) {
 
         app.getContact().clickOnAddLink();
         app.getContact().fillContactForm(new Contact().setName(name)
@@ -105,39 +74,16 @@ public class AddContactTests extends TestBase {
 
     }
 
-    //  DataProvider из CSV
-    @DataProvider
-    public Iterator<Object[]> addContactFromCsv() throws IOException {
-        // Список тестовых данных
-        List<Object[]> list = new ArrayList<>();
+    // Тест, использующий DataProvider для запуска  из CSV файла,сам DataProvider перенесен в MyDataProviders
+    @Test(dataProvider = "addContactFromCsv", dataProviderClass = MyDataProviders.class)
+    public void addContactPositiveFromDataProviderCSVTest(Contact contact){
+        app.getContact().clickOnAddLink();
+        app.getContact().fillContactForm(contact);
+        app.getContact() .clickOnSaveButton();
 
-        // Чтение CSV-файла с тестовыми данными
-        BufferedReader reader = new BufferedReader(
-                new FileReader("src/test/resources/contact.csv"));
-
-        String line;
-        // Читаем файл построчно (одна строка = один набор данных)
-        while ((line = reader.readLine()) != null) {
-
-            // Разделяем строку CSV по запятой
-            String[] split = line.split(",");
-
-            // Создаём объект Contact из данных строки
-            // и добавляем его как аргумент для теста
-            list.add(new Object[]{
-                    new Contact()
-                            .setName(split[0])
-                            .setLastname(split[1])
-                            .setPhone(split[2])
-                            .setEmail(split[3])
-                            .setAddress(split[4])
-                            .setDescription(split[5])
-            });
-        }
-
-        // Возвращаем итератор для TestNG
-        return list.iterator();
+        Assert.assertTrue(app.getContact().verifyContactByPhone(contact.getPhone()));
     }
+
 
 }
 
